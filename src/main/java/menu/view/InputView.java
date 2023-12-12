@@ -1,8 +1,10 @@
 package menu.view;
 
 import static menu.constant.ExceptionConstant.INPUT_IS_ESSENTIAL;
+import static menu.converter.StringConverter.strToList;
 
 import camp.nextstep.edu.missionutils.Console;
+import java.util.List;
 
 public class InputView {
 
@@ -14,11 +16,17 @@ public class InputView {
         System.out.println(PRINT_RECOMMEND_START);
     }
 
-    public String inputCoachName() {
+    public List<String> inputCoachName() {
         System.out.println(REQUEST_COACHES_NAME);
         String userInput = Console.readLine();
         validateBlank(userInput);
-        return userInput;
+        return strToList(userInput);
+    }
+
+    public List<String> inputNonEdibleMenu(String coachName) {
+        System.out.printf(REQUEST_NON_EDIBLE_MENU, coachName);
+        String userInput = Console.readLine();
+        return strToList(userInput);
     }
 
     private void validateBlank(String userInput) {
