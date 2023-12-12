@@ -9,6 +9,7 @@ public class Coach {
     private final String name;
 
     private Coach(String name) {
+        validateNameLength(name);
         this.name = name;
     }
 
@@ -20,5 +21,9 @@ public class Coach {
         if (name.length() <= COACH_NAME_MIN.getNumber() && COACH_NAME_MAX.getNumber() <= name.length()) {
             throw new IllegalArgumentException(COACH_NAME_LENGTH_STANDARD.getMessage());
         }
+    }
+
+    public String getName() {
+        return name;
     }
 }
