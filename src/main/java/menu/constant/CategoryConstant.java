@@ -24,5 +24,9 @@ public enum CategoryConstant {
                 .findFirst()
                 .orElseThrow();
     }
+
+    public String getLabel() {
+        return label;
+    }
 }
 

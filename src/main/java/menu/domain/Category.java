@@ -8,6 +8,7 @@ import static menu.constant.NumberConstant.CATEGORY_SIZE_MAX;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
+import java.util.stream.Collectors;
 import menu.constant.CategoryConstant;
 
 public class Category {
@@ -40,5 +41,11 @@ public class Category {
     private boolean validateCategoryDuplicated(CategoryConstant newCategory) {
         return categories.stream().filter(categoryConstant -> categoryConstant.equals(newCategory))
                 .count() > CATEGORY_DUPLICATED_STANDARD.getNumber();
+    }
+
+    public List<String> getCategoriesLabel() {
+        return categories.stream()
+                .map(CategoryConstant::getLabel)
+                .collect(Collectors.toList());
     }
 }
