@@ -1,5 +1,7 @@
 package menu.view;
 
+import static menu.constant.ExceptionConstant.INPUT_IS_ESSENTIAL;
+
 import camp.nextstep.edu.missionutils.Console;
 
 public class InputView {
@@ -21,7 +23,7 @@ public class InputView {
 
     private void validateBlank(String userInput) {
         if (userInput.isBlank()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(INPUT_IS_ESSENTIAL.getMessage());
         }
     }
 }
