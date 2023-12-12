@@ -15,6 +15,13 @@ public class InputView {
     public String inputCoachName() {
         System.out.println(REQUEST_COACHES_NAME);
         String userInput = Console.readLine();
+        validateBlank(userInput);
         return userInput;
+    }
+
+    private void validateBlank(String userInput) {
+        if (userInput.isBlank()) {
+            throw new IllegalArgumentException();
+        }
     }
 }
