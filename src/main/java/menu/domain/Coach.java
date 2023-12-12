@@ -17,7 +17,7 @@ public class Coach {
     }
 
     private void validateNameLength(String name) {
-        if (COACH_NAME_MIN.getNumber() <= name.length() && name.length() <= COACH_NAME_MAX.getNumber()) {
+        if (name.length() <= COACH_NAME_MIN.getNumber() && COACH_NAME_MAX.getNumber() <= name.length()) {
             throw new IllegalArgumentException(COACH_NAME_LENGTH_STANDARD.getMessage());
         }
     }
