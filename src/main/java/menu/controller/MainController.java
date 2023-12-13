@@ -2,7 +2,7 @@ package menu.controller;
 
 import java.util.List;
 import java.util.function.Supplier;
-import menu.domain.Category;
+import menu.domain.MenuRecommendator;
 import menu.domain.Coach;
 import menu.domain.Coaches;
 import menu.view.InputView;
@@ -24,8 +24,9 @@ public class MainController {
         inputView.printProgramStart();
         Coaches coaches = executeWithExceptionHandle(this::inputCoaches);
         inputNonEdibleMenus(coaches.getCoaches());
-        Category categories = Category.from();
-        printRecommendResult(categories.getCategoriesLabel());
+        MenuRecommendator menuRecommendator = MenuRecommendator.from();
+        menuRecommendator.recommendMenus(coaches);
+        printRecommendResult(menuRecommendator.getCategoriesLabel(), coaches);
     }
 
     private Coaches inputCoaches() {
@@ -34,12 +35,13 @@ public class MainController {
 
     private void inputNonEdibleMenus(List<Coach> coaches) {
         for (Coach coach : coaches) {
-            inputView.inputNonEdibleMenu(coach.getName());
+            List<String> nonEdibleMenus = inputView.inputNonEdibleMenu(coach.getName());
+            coach.addNonEdibleMenus(nonEdibleMenus);
         }
     }
 
-    private void printRecommendResult(List<String> categoriesLabel) {
-        outputView.printRecommendResult(categoriesLabel);
+    private void printRecommendResult(List<String> categoriesLabel, Coaches coaches) {
+        outputView.printRecommendResult(categoriesLabel, coaches);
     }
 
     private static <T> T executeWithExceptionHandle (final Supplier<T> supplier) {

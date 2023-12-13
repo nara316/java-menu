@@ -28,5 +28,9 @@ public enum CategoryConstant {
     public String getLabel() {
         return label;
     }
+
+    public int getNumber() {
+        return number;
+    }
 }
 

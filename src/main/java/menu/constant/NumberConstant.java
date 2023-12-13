@@ -9,7 +9,8 @@ public enum NumberConstant {
     CATEGORY_NUMBER_MIN(1),
     CATEGORY_NUMBER_MAX(5),
     CATEGORY_SIZE_MAX(5),
-    CATEGORY_DUPLICATED_STANDARD(2);
+    CATEGORY_DUPLICATED_STANDARD(2),
+    RECOMMEND_MENU_STANDARD(0);
 
     private final int number;
 

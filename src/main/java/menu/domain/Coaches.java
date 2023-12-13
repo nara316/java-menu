@@ -29,7 +29,7 @@ public class Coaches {
     }
 
     private void validateCoachesQuantity(List<String> names) {
-        if (names.size() <= COACHES_QUANTITY_MIN.getNumber() && COACHES_QUANTITY_MAX.getNumber() <= names.size()) {
+        if (names.size() < COACHES_QUANTITY_MIN.getNumber() || COACHES_QUANTITY_MAX.getNumber() < names.size()) {
             throw new IllegalArgumentException(COACHES_QUANTITY_STANDARD.getMessage());
         }
     }
