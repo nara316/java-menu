@@ -5,7 +5,9 @@ public enum ExceptionConstant {
     ERROR_TITLE("[ERROR] "),
     INPUT_IS_ESSENTIAL("입력값은 필수입니다."),
     COACH_NAME_LENGTH_STANDARD("코치의 이름은 2자리 이상 4자리 이하 입니다."),
-    COACHES_QUANTITY_STANDARD("코치들은 최소 2명, 최대 5명까지 함께 식사할 수 있습니다.");
+    COACH_NAME_FORM_STANDARD("코치의 이름은 문자만 허용합니다."),
+    COACHES_QUANTITY_STANDARD("코치들은 최소 2명, 최대 5명까지 함께 식사할 수 있습니다."),
+    COACHES_CANNOT_DUPLICATED("코치들의 이름은 중복될 수 없습니다");
 
     private final String message;
 

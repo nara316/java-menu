@@ -1,5 +1,6 @@
 package menu.domain;
 
+import static menu.constant.ExceptionConstant.COACH_NAME_FORM_STANDARD;
 import static menu.constant.ExceptionConstant.COACH_NAME_LENGTH_STANDARD;
 import static menu.constant.NumberConstant.COACH_NAME_MAX;
 import static menu.constant.NumberConstant.COACH_NAME_MIN;
@@ -16,6 +17,7 @@ public class Coach {
 
     private Coach(String name) {
         validateNameLength(name);
+        validateNameForm(name);
         this.name = name;
     }
 
@@ -27,6 +29,16 @@ public class Coach {
         if (name.length() < COACH_NAME_MIN.getNumber() || COACH_NAME_MAX.getNumber() < name.length()) {
             throw new IllegalArgumentException(COACH_NAME_LENGTH_STANDARD.getMessage());
         }
+    }
+
+    private void validateNameForm(String name) {
+        if (isNameAlphabetic(name)) {
+            throw new IllegalArgumentException(COACH_NAME_FORM_STANDARD.getMessage());
+        }
+    }
+
+    private boolean isNameAlphabetic(String name) {
+        return !name.chars().allMatch(Character::isAlphabetic);
     }
 
     public void addNonEdibleMenus(List<String> menus) {
