@@ -1,5 +1,7 @@
 package menu.constant;
 
+import static menu.constant.ExceptionConstant.NONEDIBlE_MENU_STANDARD;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +27,13 @@ public enum MenuConstant {
                 .filter(menuConstant -> menuConstant.categoryConstant.equals(categoryConstant))
                 .findFirst()
                 .orElseThrow();
+    }
+
+    public static void validateInMenus(String nonEdibleMenu) {
+        Arrays.stream(MenuConstant.values())
+                .filter(menuConstant -> menuConstant.menus.contains(nonEdibleMenu))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(NONEDIBlE_MENU_STANDARD.getMessage()));
     }
 
     public List<String> getMenus() {

@@ -2,12 +2,16 @@ package menu.domain;
 
 import static menu.constant.ExceptionConstant.COACH_NAME_FORM_STANDARD;
 import static menu.constant.ExceptionConstant.COACH_NAME_LENGTH_STANDARD;
+import static menu.constant.ExceptionConstant.NONEDIBLE_QUANTITY_STANDARD;
 import static menu.constant.NumberConstant.COACH_NAME_MAX;
 import static menu.constant.NumberConstant.COACH_NAME_MIN;
+import static menu.constant.NumberConstant.NONEDIBLE_QUANTITY_MAX;
+import static menu.constant.NumberConstant.NONEDIBLE_QUANTITY_MIN;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import menu.constant.MenuConstant;
 
 public class Coach {
 
@@ -41,11 +45,27 @@ public class Coach {
         return !name.chars().allMatch(Character::isAlphabetic);
     }
 
-    public void addNonEdibleMenus(List<String> menus) {
-        if (menus.isEmpty()) {
-            nonEdibleMenus.add("");
+    public void addNonEdibleMenus(List<String> nonEdibleMenus) {
+        if (nonEdibleMenus.size() == 0) {
+            return;
         }
-        nonEdibleMenus.addAll(menus);
+        validateNonEdibleMenuInMenuConstant(nonEdibleMenus);
+        validateNonEdibleMenuQuantity(nonEdibleMenus);
+        this.nonEdibleMenus.addAll(nonEdibleMenus);
+    }
+
+    private void validateNonEdibleMenuInMenuConstant(List<String> nonEdibleMenus) {
+        for (String menu : nonEdibleMenus) {
+            if (menu.trim().length() > NONEDIBLE_QUANTITY_MIN.getNumber()) {
+                MenuConstant.validateInMenus(menu);
+            }
+        }
+    }
+
+    private void validateNonEdibleMenuQuantity(List<String> nonEdibleMenus) {
+        if (nonEdibleMenus.size() > NONEDIBLE_QUANTITY_MAX.getNumber()) {
+            throw new IllegalArgumentException(NONEDIBLE_QUANTITY_STANDARD.getMessage());
+        }
     }
 
     public boolean isValidateRecommendMenu(String menu) {

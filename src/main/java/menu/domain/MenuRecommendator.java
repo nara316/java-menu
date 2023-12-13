@@ -43,7 +43,7 @@ public class MenuRecommendator {
 
     private boolean validateCategoryDuplicated(CategoryConstant newCategory) {
         return categories.stream().filter(categoryConstant -> categoryConstant.equals(newCategory))
-                .count() > CATEGORY_DUPLICATED_STANDARD.getNumber();
+                .count() >= CATEGORY_DUPLICATED_STANDARD.getNumber();
     }
 
     public void recommendMenus(Coaches coaches) {

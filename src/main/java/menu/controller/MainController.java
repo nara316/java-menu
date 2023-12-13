@@ -34,9 +34,17 @@ public class MainController {
     }
 
     private void inputNonEdibleMenus(List<Coach> coaches) {
+//        for (Coach coach : coaches) {
+//            List<String> nonEdibleMenus = inputView.inputNonEdibleMenu(coach.getName());
+//            coach.addNonEdibleMenus(nonEdibleMenus);
+//        }
+
         for (Coach coach : coaches) {
-            List<String> nonEdibleMenus = inputView.inputNonEdibleMenu(coach.getName());
-            coach.addNonEdibleMenus(nonEdibleMenus);
+            executeWithExceptionHandle(() -> {
+                List<String> nonEdibleMenus = inputView.inputNonEdibleMenu(coach.getName());
+                coach.addNonEdibleMenus(nonEdibleMenus);
+                return true;
+            });
         }
     }
 
