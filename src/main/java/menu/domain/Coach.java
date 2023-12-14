@@ -1,13 +1,12 @@
 package menu.domain;
 
-import static menu.constant.ExceptionConstant.COACH_NAME_FORM_STANDARD;
 import static menu.constant.ExceptionConstant.COACH_NAME_LENGTH_STANDARD;
 import static menu.constant.ExceptionConstant.NONEDIBLE_QUANTITY_STANDARD;
 import static menu.constant.NumberConstant.COACH_NAME_MAX;
 import static menu.constant.NumberConstant.COACH_NAME_MIN;
-import static menu.constant.NumberConstant.NONEDIBLE_QUANTITY_MAX;
-import static menu.constant.NumberConstant.NONEDIBLE_QUANTITY_MIN;
+import static menu.constant.NumberConstant.NON_EDIBLE_MAX;
 
+import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,13 +15,14 @@ import menu.constant.MenuConstant;
 public class Coach {
 
     private final String name;
-    private final List<String> nonEdibleMenus = new ArrayList<>();
-    private final List<String> recommendMenus = new ArrayList<>();
+    private List<String> nonEdibleMenus;
+    private List<String> recommendMenus;
 
     private Coach(String name) {
         validateNameLength(name);
-        validateNameForm(name);
         this.name = name;
+        nonEdibleMenus = new ArrayList<>();
+        recommendMenus = new ArrayList<>();
     }
 
     public static Coach from(String name) {
@@ -30,50 +30,45 @@ public class Coach {
     }
 
     private void validateNameLength(String name) {
-        if (name.length() < COACH_NAME_MIN.getNumber() || COACH_NAME_MAX.getNumber() < name.length()) {
+        if (name.length() < COACH_NAME_MIN.getNumber() || name.length() > COACH_NAME_MAX.getNumber()) {
             throw new IllegalArgumentException(COACH_NAME_LENGTH_STANDARD.getMessage());
         }
-    }
-
-    private void validateNameForm(String name) {
-        if (isNameAlphabetic(name)) {
-            throw new IllegalArgumentException(COACH_NAME_FORM_STANDARD.getMessage());
-        }
-    }
-
-    private boolean isNameAlphabetic(String name) {
-        return !name.chars().allMatch(Character::isAlphabetic);
     }
 
     public void addNonEdibleMenus(List<String> nonEdibleMenus) {
         if (nonEdibleMenus.size() == 0) {
             return;
         }
-        validateNonEdibleMenuInMenuConstant(nonEdibleMenus);
-        validateNonEdibleMenuQuantity(nonEdibleMenus);
+        validateNonEdibleMenusQuantity(nonEdibleMenus);
         this.nonEdibleMenus.addAll(nonEdibleMenus);
     }
 
-    private void validateNonEdibleMenuInMenuConstant(List<String> nonEdibleMenus) {
-        for (String menu : nonEdibleMenus) {
-            if (menu.trim().length() > NONEDIBLE_QUANTITY_MIN.getNumber()) {
-                MenuConstant.validateInMenus(menu);
-            }
-        }
-    }
-
-    private void validateNonEdibleMenuQuantity(List<String> nonEdibleMenus) {
-        if (nonEdibleMenus.size() > NONEDIBLE_QUANTITY_MAX.getNumber()) {
+    private void validateNonEdibleMenusQuantity(List<String> nonEdibleMenus) {
+        if (nonEdibleMenus.size() > NON_EDIBLE_MAX.getNumber()) {
             throw new IllegalArgumentException(NONEDIBLE_QUANTITY_STANDARD.getMessage());
         }
     }
 
-    public boolean isValidateRecommendMenu(String menu) {
-        if (nonEdibleMenus.contains(menu) || recommendMenus.contains(menu)) {
+    public void addRecommendMenus(String category) {
+            while (true) {
+                List<String> menus = MenuConstant.generateMenusByCategory(category);
+                String recommendMenu = generateRecommendMenu(menus);
+                if (checkRecommendQualified(recommendMenu)) {
+                    break;
+                }
+            }
+    }
+
+    private boolean checkRecommendQualified(String recommendMenu) {
+        if (recommendMenus.contains(recommendMenu) || nonEdibleMenus.contains(recommendMenu)) {
             return false;
         }
-        recommendMenus.add(menu);
+        recommendMenus.add(recommendMenu);
         return true;
+    }
+
+    private String generateRecommendMenu(List<String> menus) {
+        return Randoms.shuffle(menus).get(0);
     }
 
     public String getName() {

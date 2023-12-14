@@ -1,10 +1,10 @@
 package menu.domain;
 
-import static menu.constant.ExceptionConstant.COACHES_CANNOT_DUPLICATED;
 import static menu.constant.ExceptionConstant.COACHES_QUANTITY_STANDARD;
-import static menu.constant.NumberConstant.COACHES_QUANTITY_MAX;
-import static menu.constant.NumberConstant.COACHES_QUANTITY_MIN;
+import static menu.constant.NumberConstant.COACH_QUANTITY_MAX;
+import static menu.constant.NumberConstant.COACH_QUANTITY_MIN;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,39 +13,26 @@ public class Coaches {
 
     private final List<Coach> coaches;
 
-    private Coaches(List<String> names) {
-        this.coaches = generateCoaches(names);
+    private Coaches(List<String> coachNames) {
+        coaches = generateCoaches(coachNames);
     }
 
-    public static Coaches from(List<String> names) {
-        return new Coaches(names);
+    public static Coaches from(List<String> coachNames) {
+        return new Coaches(coachNames);
     }
 
-    private List<Coach> generateCoaches(List<String> names) {
-        validateCoachesQuantity(names);
-        validateCoachesDuplicated(names);
+    private List<Coach> generateCoaches(List<String> coachNames) {
+        validateCoachesQuantity(coachNames);
 
-        return names.stream()
+        return coachNames.stream()
                 .map(Coach::from)
                 .collect(Collectors.toList());
     }
 
-    private void validateCoachesQuantity(List<String> names) {
-        if (names.size() < COACHES_QUANTITY_MIN.getNumber() || COACHES_QUANTITY_MAX.getNumber() < names.size()) {
+    private void validateCoachesQuantity(List<String> coachNames) {
+        if (coachNames.size() < COACH_QUANTITY_MIN.getNumber() || coachNames.size() > COACH_QUANTITY_MAX.getNumber()) {
             throw new IllegalArgumentException(COACHES_QUANTITY_STANDARD.getMessage());
         }
-    }
-
-    private void validateCoachesDuplicated(List<String> names) {
-        if (isCheckDuplicated(names)) {
-            throw new IllegalArgumentException(COACHES_CANNOT_DUPLICATED.getMessage());
-        }
-    }
-
-    private boolean isCheckDuplicated(List<String> names) {
-        List<String> distinctNames = names.stream().distinct().collect(Collectors.toList());
-
-        return distinctNames.size() != names.size();
     }
 
     public List<Coach> getCoaches() {

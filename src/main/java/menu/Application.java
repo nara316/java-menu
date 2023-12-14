@@ -1,15 +1,15 @@
 package menu;
 
-import menu.controller.MainController;
+import menu.controller.GameMainController;
 import menu.view.InputView;
 import menu.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        MainController mainController = new MainController(
+        GameMainController gameMainController = new GameMainController(
                 new InputView(),
-                new OutputView()
-        );
-        mainController.run();
+                new OutputView());
+
+        gameMainController.run();
     }
 }

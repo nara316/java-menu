@@ -3,7 +3,7 @@ package menu.converter;
 import java.util.Arrays;
 import java.util.List;
 
-public class StringConverter {
+public class InputConverter {
 
     private static final String DIVISION_STANDARD = ",";
 
